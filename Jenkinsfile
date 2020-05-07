@@ -6,8 +6,7 @@ node('master'){
 //  try{
     stage("SCM"){
        step([$class:'WsCleanup'])
-       //git branch: BRANCH_NAME, 
-       credentialsId: gitCredential, url: gitUrl
+       git branch: BRANCH_NAME, credentialsId: gitCredential, url: gitUrl
     }
     stage("Build"){
        timeout(time:360, unit:'SECONDS'){
