@@ -19,7 +19,7 @@ node('master'){
     }
 
     stage("Deploy"){
-       withCredentials([usernamePassword(credentialsId: 'c5ecbc27-69b3-4cbf-b232-02979e31177e', usernameVariable:'ansibleUser', passwordVariable: 'ansibleUserPassword')]){
+       withCredentials([usernamePassword(credentialsId: 'ansible-master', usernameVariable:'ansibleUser', passwordVariable: 'ansibleUserPassword')]){
        def your_folder_repo = 'ansible'
                    sh "sshpass -p ${ansibleUserPassword} ssh ${ansibleUser}@localhost 'mkdir -p /home/${ansibleUser}/${your_folder_repo}'"
                    sh "sshpass -p ${ansibleUserPassword} scp -r * ${ansibleUser}@localhost:/home/${ansibleUser}/${your_folder_repo}"
