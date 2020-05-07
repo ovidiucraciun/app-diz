@@ -12,7 +12,7 @@ node('master'){
        timeout(time:360, unit:'SECONDS'){
           withCredentials([usernamePassword(credentialsId: 'git_clone_cred	', passwordVariable: 'git_password', usernameVariable: 'git_user')]){
            sh 'gradle build -x test'
-           sh 'ls -al /build/libs'
+           sh 'ls -al build/libs'
            //sh 'ls -al'
           }
        }
