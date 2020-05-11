@@ -46,7 +46,7 @@ node('master'){
 //  }
       stage("Move artifact"){
          withCredentials([usernamePassword(credentialsId: 'git_clone_cred	', passwordVariable: 'git_password', usernameVariable: 'git_user')]){
-           sh "cp /build/libs /mnt/csb3b6d9a4ea33ex4761xb9d"
+           sh "cp build/libs/* /mnt/csb3b6d9a4ea33ex4761xb9d"
            sh "ls -la /mnt/csb3b6d9a4ea33ex4761xb9d/"
          }
       }
