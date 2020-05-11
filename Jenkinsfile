@@ -40,7 +40,7 @@ node('master'){
          sh"az aks create \
             --resource-group aks-cluster \
             --name dizAKSCluster \
-            --node-count 3 \
+            --node-count 1 \
             --enable-addons monitoring \
             --generate-ssh-keys \
             --enable-rbac \
@@ -49,7 +49,5 @@ node('master'){
          sh "az aks get-credentials --resource-group UTCN --name cluster-diz"
        }
     }
-
-  }
 
 }
