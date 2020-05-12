@@ -43,8 +43,8 @@ node('master'){
          timeout(time:720, unit:'SECONDS'){
          sh "az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID"
          sh "az aks create \
-            --resource-group aks-cluster \
-            --name dizAKSCluster \
+            --resource-group aks-cluster-test \
+            --name dizAKSCluster-test \
             --node-count 1 \
             --enable-addons monitoring \
             --generate-ssh-keys \
