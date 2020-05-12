@@ -46,7 +46,7 @@ node('master'){
            script: 'az group exists -n aks-cluster',
            returnStdout: true
         ).trim()
-        echo "Cluster exist? : ${CLUSTER_NAME}"
+        echo "Cluster exist? -> ${CLUSTER_NAME}"
         if(CLUSTER_NAME == 'false'){
            sh "az aks create \
              --resource-group aks-cluster \
@@ -55,8 +55,8 @@ node('master'){
              --enable-addons monitoring \
              --service-principal 'e71e6f59-3b9e-47a3-b4ef-a5743dce6b22' \
              --client-secret '52e13906-17a5-4954-ad77-dac22e322a90'"
-           echo "The new aks cluster is ${CLUSTER_NAME}"
-//         sh "az aks get-credentials --resource-group UTCN --name cluster-diz"
+           echo "The new aks cluster is up and running!"
+           sh "az aks get-credentials --resource-group UTCN --name cluster-diz"
 //         sh "kubectl run nodeapp --image=aksdizregistry.azurecr.io/node:v1 --replicas=1 --port=8080"
 //         sh "kubectl get deploy"
 //         sh "kubectl get po"
@@ -73,8 +73,23 @@ node('master'){
     stage("Create image"){
        withCredentials([azureServicePrincipal('jenkins-ad')]){
          sh ("ls -al build/libs/")
+         sh ("wget https://csb3b6d9a4ea33ex4761xb9d.file.core.windows.net/artifacts-storage/app-diz-0.0.1-SNAPSHOT.jar")
          sh "az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID"
 //         sh "az acr login --name aksdizregistry"
+         sh ('echo "FROM ubuntu:18.04 \ 
+               -- RUN apt-get update && \
+               -- apt-get upgrade -y && \
+               -- apt-get install -y  software-properties-common && \
+               -- add-apt-repository ppa:webupd8team/java -y && \
+               -- apt-get update && \
+               -- echo oracle-java7-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections && \
+               -- apt-get install -y oracle-java8-installer && \
+               -- apt-get clean
+               --WORKDIR / \
+               --ADD app-diz-0.0.1-SNAPSHOT.jar \
+               --EXPOSE 8080 \
+               --CMD java - jar app-diz-0.0.1-SNAPSHOT.jar" > Dockerfile')
+         sh ("cat Dockerfile")
 
        }
     }
