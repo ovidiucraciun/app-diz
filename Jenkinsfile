@@ -49,7 +49,7 @@ node('master'){
             --enable-addons monitoring \
             --service-principal 'e71e6f59-3b9e-47a3-b4ef-a5743dce6b22' \
             --client-secret '52e13906-17a5-4954-ad77-dac22e322a90'"
-//         sh "az aks get-credentials --resource-group UTCN --name cluster-diz"
+         sh "az aks get-credentials --resource-group UTCN --name cluster-diz"
 //         sh "kubectl run nodeapp --image=aksdizregistry.azurecr.io/node:v1 --replicas=1 --port=8080"
 //         sh "kubectl get deploy"
 //         sh "kubectl get po"
