@@ -47,7 +47,6 @@ node('master'){
             --name dizAKSCluster \
             --node-count 1 \
             --enable-addons monitoring \
-            --generate-ssh-keys \
             --service-principal 'e71e6f59-3b9e-47a3-b4ef-a5743dce6b22' \
             --client-secret '52e13906-17a5-4954-ad77-dac22e322a90'"
 //         sh "az aks get-credentials --resource-group UTCN --name cluster-diz"
