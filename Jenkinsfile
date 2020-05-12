@@ -46,8 +46,8 @@ node('master'){
            script: 'az group exists -n aks-cluster',
            returnStdout: true
         ).trim()
-        echo "The resource group is: ${CLUSTER_NAME}"
-        if(CLUSTER_NAME == false){
+        echo "Cluster exist? : ${CLUSTER_NAME}"
+        if(CLUSTER_NAME == 'false'){
            sh "az aks create \
              --resource-group aks-cluster \
              --name dizAKSCluster \
@@ -63,7 +63,7 @@ node('master'){
 //         sh "kubectl get rs"
 //         sh "echo test"
          }
-         if(CLUSTER_NAME == true){
+         if(CLUSTER_NAME == 'true'){
            sh "az aks get-credentials --resource-group UTCN --name cluster-diz"
            echo "Cluster already exist and it received credentials"
          }
@@ -74,7 +74,7 @@ node('master'){
        withCredentials([azureServicePrincipal('jenkins-ad')]){
          sh ("ls -al build/libs/")
          sh "az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID"
-         sh "az acr login --name aksdizregistry"
+//         sh "az acr login --name aksdizregistry"
 
        }
     }
