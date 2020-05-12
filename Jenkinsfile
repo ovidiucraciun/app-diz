@@ -44,6 +44,7 @@ node('master'){
         sh "az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID"
         CLUSTER_NAME = sh(
            script: 'az group exists -n aks-cluster'
+           returnStdout: true
         ).trim()
         echo "The resource group is: ${CLUSTER_NAME}"
         if(CLUSTER_NAME == false){
