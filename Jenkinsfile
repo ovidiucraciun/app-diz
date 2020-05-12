@@ -73,6 +73,8 @@ node('master'){
     stage("Create image"){
        withCredentials([azureServicePrincipal('jenkins-ad')]){
          sh ("ls -al build/libs/")
+         sh "az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID"
+         sh ("wget https://csb3b6d9a4ea33ex4761xb9d.file.core.windows.net/artifacts-storage/app-diz-0.0.1-SNAPSHOT.jar")
          sh ("wget https://csb3b6d9a4ea33ex4761xb9d.file.core.windows.net/artifacts-storage/app-diz-0.0.1-SNAPSHOT.jar")
          sh "az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID"
 //         sh "az acr login --name aksdizregistry"
