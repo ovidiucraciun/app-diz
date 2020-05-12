@@ -42,26 +42,36 @@ node('master'){
        withCredentials([azureServicePrincipal('jenkins-ad')]){
          timeout(time:720, unit:'SECONDS'){
         sh "az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID"
-//        sh "az aks create \
-//           --resource-group aks-cluster \
-//           --name dizAKSCluster \
-//           --node-count 2 \
-//           --enable-addons monitoring \
-//           --service-principal 'e71e6f59-3b9e-47a3-b4ef-a5743dce6b22' \
-//           --client-secret '52e13906-17a5-4954-ad77-dac22e322a90'"
-//        sh "az aks get-credentials --resource-group UTCN --name cluster-diz"
+        CLUSTER_NAME = sh(
+           script: 'az group exists -n aks-cluster'
+        ).trim()
+        echo "The resource group is: ${CLUSTER_NAME}"
+        if(CLUSTER_NAME == false){
+           sh "az aks create \
+             --resource-group aks-cluster \
+             --name dizAKSCluster \
+             --node-count 2 \
+             --enable-addons monitoring \
+             --service-principal 'e71e6f59-3b9e-47a3-b4ef-a5743dce6b22' \
+             --client-secret '52e13906-17a5-4954-ad77-dac22e322a90'"
+           echo "The new aks cluster is ${CLUSTER_NAME}"
+//         sh "az aks get-credentials --resource-group UTCN --name cluster-diz"
 //         sh "kubectl run nodeapp --image=aksdizregistry.azurecr.io/node:v1 --replicas=1 --port=8080"
 //         sh "kubectl get deploy"
 //         sh "kubectl get po"
 //         sh "kubectl get rs"
-         sh "echo test"
+//         sh "echo test"
+         }
+         if(CLUSTER_NAME == true){
+           sh "az aks get-credentials --resource-group UTCN --name cluster-diz"
+           echo "Cluster already exist and it received credentials"
          }
        }
     }
     stage("Create image"){
        withCredentials([azureServicePrincipal('jenkins-ad')]){
-//         sh "az aks get-credentials --resource-group UTCN --name cluster-diz"
          sh ("ls -al build/libs/")
+         sh "az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID"
          sh "az acr login --name aksdizregistry"
 
        }
