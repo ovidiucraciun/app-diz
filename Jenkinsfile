@@ -19,7 +19,8 @@ node('master'){
     }
 
     stage("Deploy"){
-       withCredentials([usernamePassword(credentialsId: 'ansible-master', usernameVariable:'ansibleUser', passwordVariable: 'ansibleUserPassword')]){
+//       withCredentials([usernamePassword(credentialsId: 'ansible-master', usernameVariable:'ansibleUser', passwordVariable: 'ansibleUserPassword')]){
+       withCredentials([azureServicePrincipal('jenkins-ad')]){
        def your_folder_repo = 'ansible'
                    sh "sshpass -p ${ansibleUserPassword} ssh ${ansibleUser}@localhost -o StrictHostKeyChecking=no 'mkdir -p /home/${ansibleUser}/${your_folder_repo}'"
                    sh "sshpass -p ${ansibleUserPassword} scp -r * ${ansibleUser}@localhost:/home/${ansibleUser}/${your_folder_repo}"
@@ -30,7 +31,8 @@ node('master'){
 
       stage("Move artifact"){
          withCredentials([usernamePassword(credentialsId: 'git_clone_cred	', passwordVariable: 'git_password', usernameVariable: 'git_user')]){
-           sh "cp build/libs/* /mnt/csb3b6d9a4ea33ex4761xb9d"
+//           sh "cp build/libs/* /mnt/csb3b6d9a4ea33ex4761xb9d"
+           sh "curl -X POST -d build/libs/* https://csb3b6d9a4ea33ex4761xb9d.file.core.windows.net/artifacts-storage"
            sh "ls -la /mnt/csb3b6d9a4ea33ex4761xb9d/"
          }
       }
