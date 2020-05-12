@@ -66,6 +66,7 @@ node('master'){
            sh "az aks get-credentials --resource-group UTCN --name cluster-diz"
            echo "Cluster already exist and it received credentials"
          }
+         }
        }
     }
     stage("Create image"){
