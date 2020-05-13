@@ -78,8 +78,8 @@ node('master'){
 //         sh ("wget https:csb3b6d9a4ea33ex4761xb9d.file.core.windows.netartifacts-storageapp-diz-0.0.1-SNAPSHOT.jar")
          sh "az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID"
 //         sh "az acr login --name aksdizregistry"
-         sh ('echo \"FROM ubuntu:18.04
-                   \n test new line\" > Dockerfile')   
+         sh ("""echo "FROM ubuntu:18.04 \
+                test new line\" > Dockerfile""")   
 //         sh ('echo "RUN apt-get update && apt-get upgrade -y && apt-get install -y software-properties-common && add-apt-repository ppa:webupd8team/java -y && apt-get update && echo oracle-java7-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections && apt-get install -y oracle-java8-installer && apt-get clean" > Dockerfile')
 //         sh ('echo "WORKDIR /"  > Dockerfile')
 //         sh ('echo "ADD app-diz-0.0.1-SNAPSHOT.jar" > Dockerfile') 
