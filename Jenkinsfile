@@ -53,18 +53,20 @@ node('master'){
              --name dizAKSCluster \
              --node-count 2 \
              --enable-addons monitoring \
+             --generate-ssh-keys \
              --service-principal 'e71e6f59-3b9e-47a3-b4ef-a5743dce6b22' \
              --client-secret '52e13906-17a5-4954-ad77-dac22e322a90'"
            echo "The new aks cluster is up and running!"
            sh "az aks get-credentials --resource-group UTCN --name cluster-diz"
 //         sh "kubectl run nodeapp --image=aksdizregistry.azurecr.io/node:v1 --replicas=1 --port=8080"
-//         sh "kubectl get deploy"
+           sh "kubectl get nodes"
 //         sh "kubectl get po"
 //         sh "kubectl get rs"
 //         sh "echo test"
          }
          if(CLUSTER_NAME == 'true'){
            sh "az aks get-credentials --resource-group UTCN --name cluster-diz"
+           sh "kubectl get nodes"
            echo "Cluster already exist and it received credentials"
          }
          }
@@ -90,6 +92,14 @@ node('master'){
         withCredentials([azureServicePrincipal('jenkins-ad')]){
            sh ("pwd && ls -al")
            sh ("az acr build --image dizertatie/diz-app:v1 --registry aksdizregistry --file Dockerfile .")
+        }
+    }
+    stage("Deployment"){
+        withCredentials([azureServicePrincipal('jenkins-ad')]){
+           sh "(kubectl run diz-app --image=aksdizregistry.azurecr.io/dizertatie/diz-app:v1 --replicas=1 --port=8080)"
+           sh "(kubectl get deploy && kubectl get po && kubectl get rs)"
+           sh "(kubectl expose deploy diz-app --port=80 --target-port=8080 --dry-run -o yaml > svc.yaml)"
+
         }
     }
 
