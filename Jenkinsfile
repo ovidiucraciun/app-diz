@@ -79,7 +79,7 @@ node('master'){
          sh "az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID"
 //         sh "az acr login --name aksdizregistry"
          sh ("""echo "FROM ubuntu:18.04\n
-  RUN apt-get update && apt-get upgrade -y && apt-get install -y software-properties-common && add-apt-repository ppa:webupd8team/java -y && apt-get update && echo oracle-java7-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections && apt-get install -y oracle-java8-installer && apt-get clean\n
+  RUN apt-get update && apt-get upgrade -y && apt-get install -y software-properties-common && add-apt-repository ppa:webupd8team/java -y && apt-get update && echo oracle-java8-installer shared/accepted-oracle-licence-v1-1 boolean true | sudo /usr/bin/debconf-set-selections && apt-get install -y oracle-java8-installer && apt-get clean\n
   WORKDIR /\n
   COPY app-diz-0.0.1-SNAPSHOT.jar /opt/spring-cloud/lib/\n
   EXPOSE 8080\n
