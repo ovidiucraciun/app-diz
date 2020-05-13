@@ -81,9 +81,9 @@ node('master'){
          sh ("""echo "FROM ubuntu:18.04\n
   RUN apt-get update && apt-get upgrade -y && apt-get install -y software-properties-common && add-apt-repository ppa:webupd8team/java -y && apt-get update && echo oracle-java7-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections && apt-get install -y oracle-java8-installer && apt-get clean\n
   WORKDIR /\n
-  ADD app-diz-0.0.1-SNAPSHOT.jar\n
+  COPY app-diz-0.0.1-SNAPSHOT.jar /opt/spring-cloud/lib/\n
   EXPOSE 8080\n
-  CMD java - jar app-diz-0.0.1-SNAPSHOT.jar" > Dockerfile""")
+  CMD java - jar /opt/spring-cloud/lib/app-diz-0.0.1-SNAPSHOT.jar" > Dockerfile""")
          sh ("cat Dockerfile")
          sh ("pwd && ls -al")
        }
