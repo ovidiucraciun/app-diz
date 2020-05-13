@@ -100,7 +100,7 @@ node('master'){
            sh "(kubectl get deploy && kubectl get pods && kubectl get rs)"
            sh "(kubectl expose deploy diz-app-deployment --port=80 --target-port=8080 --dry-run -o yaml > svc.yaml)"
            sh "(pwd)"
-           sh "(sed -i 's|spec:|spec:\  type: LoadBalancer|g' svc.yaml)"
+           sh "(sed -i 's|spec:|spec:\n  type: LoadBalancer|g' svc.yaml)"
            sh "(cat svc.yml)"
            sh "(kubectl apply -f svc.yaml)"
            sh "(kubectl get svc)"
