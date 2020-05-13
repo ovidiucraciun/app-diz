@@ -91,7 +91,7 @@ node('master'){
     stage("Push image to ACR"){
         withCredentials([azureServicePrincipal('jenkins-ad')]){
            sh ("pwd && ls -al")
-           az acr build --image dizertatie/diz-app:v1 --registry aksdizregistry --file Dockerfile .
+           sh ("az acr build --image dizertatie/diz-app:v1 --registry aksdizregistry --file Dockerfile .")
         }
     }
 
