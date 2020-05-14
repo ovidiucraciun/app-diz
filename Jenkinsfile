@@ -100,7 +100,7 @@ node('master'){
               script: 'kubectl get deploy',
               returnStdout: true
            ).trim()
-           if(DEPLOY_VAR != NULL){
+           if(DEPLOY_VAR){
              sh "(kubectl delete deploy diz-app-deployment)"
            }
            sh "(kubectl run diz-app-deployment --image=aksdizregistry.azurecr.io/dizertatie/diz-app:v1 --replicas=2 --port=8080)"
