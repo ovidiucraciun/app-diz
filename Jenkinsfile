@@ -107,13 +107,15 @@ node('master'){
            sh "(kubectl get deploy && kubectl get pods && kubectl get rs)"
            sh "(kubectl expose deploy diz-app-deployment --port=80 --target-port=8080 --dry-run -o yaml > svc.yaml)"
            sh "(pwd && ls -al)"
-           sh "(touch svc2.yaml && sed -i '9i^  type: LoadBalancer' /var/lib/jenkins/workspace/build-appdiz-mp_master/svc.yaml | tee /var/lib/jenkins/workspace/build-appdiz-mp_master/svc.yaml)"
-           sh "(touch svc.yaml && sed -i 's/^/ /g' /var/lib/jenkins/workspace/build-appdiz-mp_master/svc.yaml | tee /var/lib/jenkins/workspace/build-appdiz-mp_master/svc.yaml)"
+           sh "(cat /var/lib/jenkins/workspace/build-appdiz-mp_master/svc.yaml)"
+           sh "(sed -i '9i^  type: LoadBalancer' /var/lib/jenkins/workspace/build-appdiz-mp_master/svc.yaml | tee /var/lib/jenkins/workspace/build-appdiz-mp_master/svc.yaml)"
+           sh "(cat /var/lib/jenkins/workspace/build-appdiz-mp_master/svc.yaml)"
+           sh "(sed -i 's/^/ /g' /var/lib/jenkins/workspace/build-appdiz-mp_master/svc.yaml | tee /var/lib/jenkins/workspace/build-appdiz-mp_master/svc.yaml)"
 //           sh "(gawk -i inplace '{sub(/spec:/,'spec:  type: LoadBalancer')}' /var/lib/jenkins/workspace/build-appdiz-mp_master/svc.yaml)"
 //           sh "(awk '{ gsub()}')"
            sh "(cat /var/lib/jenkins/workspace/build-appdiz-mp_master/svc.yaml)"
-           sh "(kubectl apply -f svc.yaml)"
-           sh "(kubectl get svc)"
+//           sh "(kubectl apply -f svc.yaml)"
+//           sh "(kubectl get svc)"
 
         }
     }
