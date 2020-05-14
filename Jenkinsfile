@@ -107,11 +107,11 @@ node('master'){
            sh "(kubectl get deploy && kubectl get pods && kubectl get rs)"
            sh "(kubectl expose deploy diz-app-deployment --port=80 --target-port=8080 --dry-run -o yaml > svc.yaml)"
            sh "(pwd && ls -al)"
-           sh "test='$(cat <<-EOF
+           sh "test='${cat <<-EOF
 spec:
   type: LoadBalancer
 EOF
-)'"
+}'"
            sh ("echo '$test')
            sh "(sed -i 's/spec:/'${test}'/g' /var/lib/jenkins/workspace/build-appdiz-mp_master/svc.yaml)"
 //           sh "(gawk -i inplace '{sub(/spec:/,'spec:  type: LoadBalancer')}' /var/lib/jenkins/workspace/build-appdiz-mp_master/svc.yaml)"
