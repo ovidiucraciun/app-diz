@@ -110,7 +110,7 @@ node('master'){
            sh "(cat /var/lib/jenkins/workspace/build-appdiz-mp_master/svc.yaml)"
            sh "(sed -i '9i^  type: LoadBalancer' /var/lib/jenkins/workspace/build-appdiz-mp_master/svc.yaml)"
            sh "(cat /var/lib/jenkins/workspace/build-appdiz-mp_master/svc.yaml)"
-           sh "(sed -i 's/^/ /g' /var/lib/jenkins/workspace/build-appdiz-mp_master/svc.yaml)"
+           sh "(sed -i 'y/^/ /' /var/lib/jenkins/workspace/build-appdiz-mp_master/svc.yaml)"
 //           sh "(gawk -i inplace '{sub(/spec:/,'spec:  type: LoadBalancer')}' /var/lib/jenkins/workspace/build-appdiz-mp_master/svc.yaml)"
 //           sh "(awk '{ gsub()}')"
            sh "(cat /var/lib/jenkins/workspace/build-appdiz-mp_master/svc.yaml)"
