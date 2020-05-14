@@ -109,7 +109,7 @@ node('master'){
            sh "(pwd && ls -al)"
 //           sh "(sed -i 's+spec+spec:  type: LoadBalancer+g' /var/lib/jenkins/workspace/build-appdiz-mp_master/svc.yaml)"
            sh "(tr 'script' 'spec:\n  type: LoadBalancer' < /var/lib/jenkins/workspace/build-appdiz-mp_master/svc.yaml > /var/lib/jenkins/workspace/build-appdiz-mp_master/svc.yaml)"
-           sh "(cat /var/lib/jenkins/workspace/build-appdiz-mp_master)"
+           sh "(cat /var/lib/jenkins/workspace/build-appdiz-mp_master/svc.yaml)"
            sh "(kubectl apply -f svc.yaml)"
            sh "(kubectl get svc)"
 
