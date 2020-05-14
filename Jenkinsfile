@@ -107,7 +107,7 @@ node('master'){
            sh "(kubectl get deploy && kubectl get pods && kubectl get rs)"
            sh "(kubectl expose deploy diz-app-deployment --port=80 --target-port=8080 --dry-run -o yaml > svc.yaml)"
            sh "(pwd && ls -al)"
-           sh "(sed -i $'s/spec/+spec:\n  type: LoadBalancer/g' /var/lib/jenkins/workspace/build-appdiz-mp_master/svc.yaml)"
+           sh "(sed -i 's/spec/spec:\n  type: LoadBalancer/g' /var/lib/jenkins/workspace/build-appdiz-mp_master/svc.yaml)"
            sh "(ls -al /var/lib/jenkins/workspace/build-appdiz-mp_master)"
            sh "(kubectl apply -f svc.yaml)"
            sh "(kubectl get svc)"
