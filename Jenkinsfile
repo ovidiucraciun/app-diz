@@ -108,7 +108,7 @@ node('master'){
            sh "(kubectl expose deploy diz-app-deployment --port=80 --target-port=8080 --dry-run -o yaml > svc.yaml)"
            sh "(pwd && ls -al)"
 //           sh "(sed -i 's+spec+spec:  type: LoadBalancer+g' /var/lib/jenkins/workspace/build-appdiz-mp_master/svc.yaml)"
-           sh "(tr 'script' 'spec:\n  type: LoadBalancer' < /var/lib/jenkins/workspace/build-appdiz-mp_master/svc.yaml > /var/lib/jenkins/workspace/build-appdiz-mp_master/svc.yaml)"
+           sh "(tr 'script' 'spec:\n  type: LoadBalancer'  /var/lib/jenkins/workspace/build-appdiz-mp_master/svc.yaml)"
            sh "(cat /var/lib/jenkins/workspace/build-appdiz-mp_master/svc.yaml)"
            sh "(kubectl apply -f svc.yaml)"
            sh "(kubectl get svc)"
