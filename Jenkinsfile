@@ -48,6 +48,7 @@ node('master'){
         ).trim()
         echo "Cluster exist? -> ${CLUSTER_NAME}"
         if(CLUSTER_NAME == 'false'){
+           sh "az group create -l westeurope -n aks-cluster"
            sh "az aks create \
              --resource-group aks-cluster \
              --name dizAKSCluster \
