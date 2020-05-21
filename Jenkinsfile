@@ -102,7 +102,7 @@ node('master'){
     stage("Push image to ACR"){
         withCredentials([azureServicePrincipal('jenkins-ad')]){
            sh ("pwd && ls -al")
-           sh ("az acr build --image dizertatie/diz-app:v1 --registry aksdizregistry --file Dockerfile .")
+           sh ("az acr build --image dizertatie/diz-app:v2 --registry aksdizregistry --file Dockerfile .")
         }
     }
     stage("Deployment"){
@@ -114,7 +114,7 @@ node('master'){
            if(DEPLOY_VAR){
              sh "(kubectl delete deploy diz-app-deployment)"
            }
-           sh "kubectl get pods --all-namespaces -o jsonpath="{..image}" |\
+           sh "kubectl get pods --all-namespaces -o jsonpath="'{'..image'}'" |\
                tr -s '[[:space:]]' '\n' |\
                sort |\
                uniq -c"
