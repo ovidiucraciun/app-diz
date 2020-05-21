@@ -81,7 +81,17 @@ node('master'){
 //         sh ("wget https:csb3b6d9a4ea33ex4761xb9d.file.core.windows.netartifacts-storageapp-diz-0.0.1-SNAPSHOT.jar")
          sh "az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID"
 //         sh "az acr login --name aksdizregistry"
-         sh ("""echo "FROM openjdk:8-jre-alpine\n
+         sh ("""echo "FROM ubuntu:latest\n
+  RUN apt-get update && \n
+    apt-get install -y openjdk-8-jdk && \n
+    apt-get install -y ant && \n
+    apt-get clean; \n
+  RUN apt-get update && \n
+    apt-get install ca-certificates-java && \n
+    apt-get clean && \n
+    update-ca-certificates -f;\n
+  ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64/
+  RUN export JAVA_HOME
   COPY app-diz-0.0.1-SNAPSHOT.jar /opt/spring-cloud/lib/\n
   EXPOSE 8080\n
   CMD ["/usr/bin/java", "-jar", "-Dspring.profiles.active=default", "/opt/spring-cloud/lib/app-diz-0.0.1-SNAPSHOT.jar"]" > Dockerfile""")
@@ -104,6 +114,7 @@ node('master'){
            if(DEPLOY_VAR){
              sh "(kubectl delete deploy diz-app-deployment)"
            }
+           sh ""
            sh "(kubectl run diz-app-deployment --image=aksdizregistry.azurecr.io/dizertatie/diz-app:v1 --replicas=2 --port=8080)"
            sh "(kubectl get deploy && kubectl get pods && kubectl get rs)"
            sh "(kubectl expose deploy diz-app-deployment --port=80 --target-port=8080 --dry-run -o yaml > svc.yaml)"
