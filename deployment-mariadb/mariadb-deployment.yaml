@@ -29,11 +29,9 @@ spec:
           - name: MYSQL_DATABASE
             value: "myDB"
           volumeMounts:
-          - name: volume_db
+          - name: volume-db
             mountPath: /var/lib/mysql
-          args:
-            - --configfile=/config/traefik.toml
       volumes:
-        - name: volume_db
+        - name: volume-db
           hostPath:
             path: /home
