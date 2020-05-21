@@ -1,0 +1,33 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: mariadb-deploy
+  labels:
+    app: mariadb
+    type: database
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mariadb
+        type: database
+    spec:
+      containers:
+        - name: 'mydb'
+          image: mariadb:10.3
+          ports:
+          - containerPort: 3307:3306
+            name: db-port
+          env:
+          - name: MYSQL_ROOT_PASSWORD
+            value: "12345"
+          - name: MYSQL_USER
+            value: "ovidiu"
+          - name: MYSQL_PASSWORD
+            value: "12345"
+          - name: MYSQL_DATABASE
+            value: "myDB"
+          volumeMounts:
+          - name: /var/lib/jenkins/workspace/build-appdiz-mp_master/deployment-mariadb/volumes-db
+            mountPath: /var/lib/mysql

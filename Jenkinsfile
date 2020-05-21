@@ -115,7 +115,8 @@ node('master'){
              sh "(kubectl delete deploy diz-app-deployment)"
            }
            sh "(kubectl run diz-app-deployment --image=aksdizregistry.azurecr.io/dizertatie/diz-app:v2 --replicas=2 --port=8080)"
-           sh "kubectl get deployments -o wide"
+           sh "(kubectl run mydb --iamge=/deployment-mariadb/mariadb-deployment.yaml)"
+           sh "(kubectl get deployments -o wide)"
            sh "(kubectl get deploy && kubectl get pods && kubectl get rs)"
            sh "(kubectl expose deploy diz-app-deployment --port=80 --target-port=8080 --dry-run -o yaml > svc.yaml)"
            sh "(pwd && ls -al)"
