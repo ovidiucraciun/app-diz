@@ -16,6 +16,6 @@ RUN apt-get update && \
 ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64/
 RUN export JAVA_HOME
 
-COPY app-diz-0.0.1-SNAPSHOT.jar /opt/spring-cloud/lib/
+COPY build/libs/app-diz-0.0.1-SNAPSHOT.jar /opt/spring-cloud/lib/
 
 EXPOSE 8080
