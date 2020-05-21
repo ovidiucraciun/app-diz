@@ -66,7 +66,7 @@ node('master'){
 //         sh "echo test"
          }
          if(CLUSTER_NAME == 'true'){
-           sh "az aks get-credentials --resource-group aks-cluster --name dizAKSCluster"
+           sh "az aks get-credentials --resource-group aks-cluster --name dizAKSCluster --overwrite-existing"
            sh "kubectl get nodes"
            echo "Cluster already exist and it received credentials"
          }
