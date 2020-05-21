@@ -29,5 +29,11 @@ spec:
           - name: MYSQL_DATABASE
             value: "myDB"
           volumeMounts:
-          - name: /var/lib/jenkins/workspace/build-appdiz-mp_master
+          - name: volume_db
             mountPath: /var/lib/mysql
+          args:
+            - --configfile=/config/traefik.toml
+      volumes:
+        - name: volume_db
+          hostPath:
+            path: /home
