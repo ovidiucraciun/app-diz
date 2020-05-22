@@ -1,7 +1,7 @@
-apiVersion: apps/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mariadb-deploy
+  name: mariadb
   labels:
     app: mariadb
     type: database
@@ -17,8 +17,9 @@ spec:
         - name: 'mydb'
           image: mariadb:10.3
           ports:
-          - containerPort: 3307
+          - containerPort: 3306
             name: db-port
+          expose: 
           env:
           - name: MYSQL_ROOT_PASSWORD
             value: "12345"
