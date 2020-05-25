@@ -112,7 +112,7 @@ node('master'){
               returnStdout: true
            ).trim()
            if(DEPLOY_VAR){
-             sh "(kubectl delete deploy diz-app-deployment)"
+//             sh "(kubectl delete deploy diz-app-deployment)"
              sh "(kubectl delete deploy mariadb-deploy)"
            }
            sh "(kubectl create -f deployment-mariadb/mariadb-deployment.yaml)"
