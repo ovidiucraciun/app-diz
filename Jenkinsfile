@@ -52,7 +52,7 @@ node('master'){
            sh "az aks create \
              --resource-group aks-cluster \
              --name dizAKSCluster1 \
-             --node-count 2 \
+             --node-count 1 \
              --enable-addons monitoring \
              --generate-ssh-keys \
              --service-principal 'e71e6f59-3b9e-47a3-b4ef-a5743dce6b22' \
@@ -116,7 +116,7 @@ node('master'){
              sh "(kubectl delete deploy mariadb-deploy)"
            }
            sh "(kubectl create -f deployment-mariadb/mariadb-deployment.yaml)"
-           sh "(kubectl apply -f deployment-mariadb.yml/mariadb-svc.yaml)"
+           sh "(kubectl apply -f deployment-mariadb/mariadb-svc.yaml)"
            sh "(kubectl run diz-app-deployment --image=aksdizregistry.azurecr.io/dizertatie/diz-app:v2 --replicas=2 --port=8080)"
            sh "(kubectl get deployments -o wide)"
            sh "(kubectl get deploy && kubectl get pods && kubectl get rs)"
