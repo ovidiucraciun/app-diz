@@ -121,15 +121,16 @@ node('master'){
            sh "(kubectl run diz-app-deployment --image=aksdizregistry.azurecr.io/dizertatie/diz-app:v2 --replicas=2 --port=8080)"
            sh "(kubectl get deployments -o wide)"
            sh "(kubectl get deploy && kubectl get pods && kubectl get rs)"
-           sh "(kubectl expose deploy diz-app-deployment --port=80 --target-port=8080 --dry-run -o yaml > svc.yaml)"
+           sh "(kubectl expose deploy diz-app-deployment --port=80 --target-port=8080 --dry-run -o yaml > diz-app-svc.yaml)"
            sh "(pwd && ls -al)"
-           sh "(cat /var/lib/jenkins/workspace/build-appdiz-mp_master/svc.yaml)"
-           sh "(sed -i '9i^ type: LoadBalancer' /var/lib/jenkins/workspace/build-appdiz-mp_master/svc.yaml)"
-           sh "(cat /var/lib/jenkins/workspace/build-appdiz-mp_master/svc.yaml)"
-           sh "(sed -i 'y/^/ /' /var/lib/jenkins/workspace/build-appdiz-mp_master/svc.yaml)"
-           sh "(cat /var/lib/jenkins/workspace/build-appdiz-mp_master/svc.yaml)"
-           sh "(kubectl apply -f svc.yaml)"
+           sh "(cat /var/lib/jenkins/workspace/build-appdiz-mp_master/diz-app-svc.yaml)"
+           sh "(sed -i '9i^ type: ClusterIP' /var/lib/jenkins/workspace/build-appdiz-mp_master/diz-app-svc.yaml)"
+           sh "(cat /var/lib/jenkins/workspace/build-appdiz-mp_master/diz-app-svc.yaml)"
+           sh "(sed -i 'y/^/ /' /var/lib/jenkins/workspace/build-appdiz-mp_master/diz-app-svc.yaml)"
+           sh "(cat /var/lib/jenkins/workspace/build-appdiz-mp_master/diz-app-svc.yaml)"
+           sh "(kubectl apply -f diz-app-svc.yaml)"
            sh "(kubectl get svc)"
+           sh "(kubectl apply -f ingress-app-deploy.yaml)"
 
         }
     }

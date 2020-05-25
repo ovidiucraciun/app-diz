@@ -1,0 +1,15 @@
+piVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: diz-app-deployment
+  annotations:
+    kubernetes.io/ingress.class: addon-http-application-routing
+spec:
+  rules:
+  - host: diz-app-deployment.5a4dafb11c994fa3a6aa.westeurope.aksapp.io
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: diz-app-deployment
+          servicePort: 80
