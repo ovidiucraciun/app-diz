@@ -133,7 +133,7 @@ node('master'){
            // Create ingress
            sh "(az aks enable-addons --resource-group aks-cluster --name dizAKSCluster1 --addons http_application_routing)"
            QUERY_VAR = sh(
-              script: 'query az aks show --resource-group aks-cluster --name dizAKSCluster1 --query addonProfiles.httpApplicationRouting.config.HTTPApplicationRoutingZoneName -o table',
+              script: 'az aks show --resource-group aks-cluster --name dizAKSCluster1 --query addonProfiles.httpApplicationRouting.config.HTTPApplicationRoutingZoneName -o table',
               returnStdout: true
            ).trim()
            echo "${QUERY_VAR}"
