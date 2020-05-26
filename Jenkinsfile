@@ -130,7 +130,14 @@ node('master'){
            sh "(cat /var/lib/jenkins/workspace/build-appdiz-mp_master/diz-app-svc.yaml)"
            sh "(kubectl apply -f diz-app-svc.yaml)"
            sh "(kubectl get svc)"
-           sh "(kubectl apply -f ingress-app-deploy.yaml)"
+           // Create ingress
+           sh "(az aks enable-addons --resource-group aks-cluster --name dizAKSCluster1 --addons http_application_routing)"
+           QUERY_VAR = sh(
+              script: 'query az aks show --resource-group aks-cluster --name dizAKSCluster1 --query addonProfiles.httpApplicationRouting.config.HTTPApplicationRoutingZoneName -o table',
+              returnStdout: true
+           ).trim()
+           echo "${QUERY_VAR}"
+           sh "(kubectl apply -f ingress/ingress-app-deploy.yaml)"
 
         }
     }
