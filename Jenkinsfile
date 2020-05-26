@@ -121,9 +121,9 @@ node('master'){
               returnStdout: true
            ).trim()
            if(SVC_VAR){
-             //sh "(kubectl delete svc diz-app-deploy)"
-            // sh "(kubectl delete svc mariadb-svc)"
-               sh "(ls)"
+             sh "(kubectl delete svc diz-app-deploy)"
+             sh "(kubectl delete svc mariadb-svc)"
+             sh "(kubectl delete svc kubernetes)"
            }
            INGRESS_VAR = sh(
               script: 'kubectl get ingress',
@@ -156,9 +156,9 @@ node('master'){
               returnStdout: true
            ).trim()
            echo "${QUERY_VAR}"
-  //       sh "(az aks show --resource-group aks-cluster --name dizAKSCluster1 --query addonProfiles.httpApplicationRouting.config.HTTPApplicationRoutingZoneName -o table > file.txt)"
-   //        sh "(tail -n 1 file.txt > file1.txt && dns_var=\$(cat file1.txt))"
-    //       sh '(sed -i "s/diz-app-deploy.*/diz-app-deploy.${var}.westeurope.aksapp.io/g" ingress/ingress-app-deploy.yaml)'
+           sh "(az aks show --resource-group aks-cluster --name dizAKSCluster1 --query addonProfiles.httpApplicationRouting.config.HTTPApplicationRoutingZoneName -o table > file.txt)"
+           sh "(tail -n 1 file.txt > file1.txt && dns_var=\$(cat file1.txt))"
+           sh '(sed -i "s/diz-app-deploy..*/diz-app-deploy.${dns_var}/g" ingress/ingress-app-deploy.yaml)'
            sh "(kubectl apply -f ingress/ingress-app-deploy.yaml)"
 
         }
