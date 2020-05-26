@@ -144,9 +144,9 @@ node('master'){
            sh "(pwd && ls -al)"
            sh "(cat /var/lib/jenkins/workspace/build-appdiz-mp_master/diz-app-svc.yaml)"
            sh "(sed -i '9i^ type: ClusterIP' /var/lib/jenkins/workspace/build-appdiz-mp_master/diz-app-svc.yaml)"
-           sh "(cat /var/lib/jenkins/workspace/build-appdiz-mp_master/diz-app-svc.yaml)"
+           //sh "(cat /var/lib/jenkins/workspace/build-appdiz-mp_master/diz-app-svc.yaml)"
            sh "(sed -i 'y/^/ /' /var/lib/jenkins/workspace/build-appdiz-mp_master/diz-app-svc.yaml)"
-           sh "(cat /var/lib/jenkins/workspace/build-appdiz-mp_master/diz-app-svc.yaml)"
+          // sh "(cat /var/lib/jenkins/workspace/build-appdiz-mp_master/diz-app-svc.yaml)"
            sh "(kubectl apply -f diz-app-svc.yaml)"
            sh "(kubectl get svc)"
            // Create ingress
