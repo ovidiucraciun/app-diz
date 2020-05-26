@@ -112,12 +112,31 @@ node('master'){
               returnStdout: true
            ).trim()
            if(DEPLOY_VAR){
-             sh "(kubectl delete deploy diz-app-deployment)"
+             sh "(kubectl delete deploy diz-app-deploy)"
              sh "(kubectl delete deploy mariadb)"
                sh "(ls)"
            }
+           SVC_VAR = sh(
+              script: 'kubectl get svc',
+              returnStdout: true
+           ).trim()
+           if(DEPLOY_VAR){
+             sh "(kubectl delete svc diz-app-deploy)"
+             sh "(kubectl delete svc mariadb-svc)"
+               sh "(ls)"
+           }
+           INGRESS_VAR = sh(
+              script: 'kubectl get ingress',
+              returnStdout: true
+           ).trim()
+           if(DEPLOY_VAR){
+             sh "(kubectl delete ingress diz-app-deploy)"
+               sh "(ls)"
+           }
+           //MariaDB deploy & svc create
            sh "(kubectl create -f deployment-mariadb/mariadb-deployment.yaml)"
            sh "(kubectl apply -f deployment-mariadb/mariadb-svc.yaml)"
+           //App deploy & svc create
            sh "(kubectl run diz-app-deployment --image=aksdizregistry.azurecr.io/dizertatie/diz-app:v2 --replicas=2 --port=8080)"
            sh "(kubectl get deployments -o wide)"
            sh "(kubectl get deploy && kubectl get pods && kubectl get rs)"
