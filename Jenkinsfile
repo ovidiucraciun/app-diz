@@ -157,8 +157,8 @@ node('master'){
            ).trim()
            echo "${QUERY_VAR}"
            sh "(az aks show --resource-group aks-cluster --name dizAKSCluster1 --query addonProfiles.httpApplicationRouting.config.HTTPApplicationRoutingZoneName -o table > file.txt)"
-           sh "(tail -n 1 file.txt > file1.txt && dns_var=\$(cat file1.txt))"
-           sh '(sed -i "s/diz-app-deploy..*/diz-app-deploy.${dns_var}/g" ingress/ingress-app-deploy.yaml)'
+           sh '(tail -n 1 file.txt > file1.txt && dns_var=\$(cat file1.txt) && sed -i "s/diz-app-deploy..*/diz-app-deploy.${dns_var}/g" ingress/ingress-app-deploy.yaml)'
+        //   sh '(sed -i "s/diz-app-deploy..*/diz-app-deploy.${dns_var}/g" ingress/ingress-app-deploy.yaml)'
            sh "(kubectl apply -f ingress/ingress-app-deploy.yaml)"
 
         }
