@@ -112,7 +112,7 @@ node('master'){
               returnStdout: true
            ).trim()
            if(DEPLOY_VAR){
-             sh "(kubectl delete deploy diz-app-deploy)"
+             //sh "(kubectl delete deploy diz-app-deploy)"
              sh "(kubectl delete deploy mariadb)"
                sh "(ls)"
            }
@@ -121,7 +121,7 @@ node('master'){
               returnStdout: true
            ).trim()
            if(DEPLOY_VAR){
-             sh "(kubectl delete svc diz-app-deploy)"
+             //sh "(kubectl delete svc diz-app-deploy)"
              sh "(kubectl delete svc mariadb-svc)"
                sh "(ls)"
            }
