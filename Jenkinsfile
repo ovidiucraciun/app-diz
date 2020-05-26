@@ -120,7 +120,7 @@ node('master'){
               script: 'kubectl get svc',
               returnStdout: true
            ).trim()
-           if(DEPLOY_VAR){
+           if(SVC_VAR){
              sh "(kubectl delete svc diz-app-deploy)"
              sh "(kubectl delete svc mariadb-svc)"
                sh "(ls)"
@@ -129,7 +129,7 @@ node('master'){
               script: 'kubectl get ingress',
               returnStdout: true
            ).trim()
-           if(DEPLOY_VAR){
+           if(INGRESS_VAR){
              sh "(kubectl delete ingress diz-app-deploy)"
                sh "(ls)"
            }
