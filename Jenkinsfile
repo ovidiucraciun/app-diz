@@ -130,7 +130,6 @@ node('master'){
            if(SVC_VAR){
              sh "(kubectl delete svc diz-app-deploy)"
              sh "(kubectl delete svc mariadb-svc)"
-             sh "(kubectl delete svc kubernetes)"
            }
            INGRESS_VAR = sh(
               script: 'kubectl get ingress',
