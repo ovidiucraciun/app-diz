@@ -102,7 +102,7 @@ node('master'){
     stage("Push image to ACR"){
         withCredentials([azureServicePrincipal('jenkins-ad')]){
            sh ("pwd && ls -al")
-           sh ("az acr build --image dizertatie/diz-app:v5 --registry aksdizregistry --file Dockerfile .")
+           sh ("az acr build --image dizertatie/diz-app:v6 --registry aksdizregistry --file Dockerfile .")
         }
     }
     stage("Deployment"){
@@ -143,7 +143,7 @@ node('master'){
            sh "(kubectl create -f deployment-mariadb/mariadb-deployment.yaml)"
            sh "(kubectl apply -f deployment-mariadb/mariadb-svc.yaml)"
            //App deploy & svc create
-           sh "(kubectl run diz-app-deploy --image=aksdizregistry.azurecr.io/dizertatie/diz-app:v5 --replicas=2 --port=8080)"
+           sh "(kubectl run diz-app-deploy --image=aksdizregistry.azurecr.io/dizertatie/diz-app:v6 --replicas=2 --port=8080)"
            sh "(kubectl get deployments -o wide)"
            sh "(kubectl get deploy && kubectl get pods && kubectl get rs)"
            sh "(kubectl expose deploy diz-app-deploy --port=80 --target-port=8080 --dry-run -o yaml > diz-app-svc.yaml)"
