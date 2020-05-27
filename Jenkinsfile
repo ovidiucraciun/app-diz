@@ -116,6 +116,13 @@ node('master'){
              sh "(kubectl delete deploy mariadb)"
                sh "(ls)"
            }
+           SVC1_VAR = sh(
+              script: 'kubectl get svc',
+              returnStdout: true
+           ).trim()
+           if(SVC1_VAR){
+             sh "(kubectl delete svc kubernetes)"
+           }
            SVC_VAR = sh(
               script: 'kubectl get svc',
               returnStdout: true
