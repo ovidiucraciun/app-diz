@@ -20,4 +20,4 @@ COPY build/libs/app-diz-0.0.3-SNAPSHOT.jar /opt/spring-cloud/lib/
 
 EXPOSE 8080
 
-CMD ["/usr/bin/java", "-jar", "-Dspring.profiles.active=default", "/opt/spring-cloud/lib/app-diz-0.0.2-SNAPSHOT.jar"]
+CMD ["/usr/bin/java", "-jar", "-Dspring.profiles.active=default", "/opt/spring-cloud/lib/app-diz-0.0.3-SNAPSHOT.jar"]
