@@ -156,7 +156,7 @@ node('master'){
            sh "(kubectl apply -f diz-app-svc.yaml)"
            sh "(kubectl get svc)"
            // Create ingress
-           //sh "(az aks enable-addons --resource-group aks-cluster --name dizAKSCluster1 --addons http_application_routing)"
+           sh "(az aks enable-addons --resource-group aks-cluster --name dizAKSCluster1 --addons http_application_routing)"
            QUERY_VAR = sh(
               script: 'az aks show --resource-group aks-cluster --name dizAKSCluster1 --query addonProfiles.httpApplicationRouting.config.HTTPApplicationRoutingZoneName -o table',
               returnStdout: true
