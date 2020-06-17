@@ -156,14 +156,15 @@ node('master'){
            sh "(kubectl apply -f diz-app-svc.yaml)"
            sh "(kubectl get svc)"
            // Create ingress
-           sh "( )"
+           //sh "( )"
            QUERY_VAR = sh(
               script: 'az aks show --resource-group aks-cluster --name dizAKSCluster1 --query addonProfiles.httpApplicationRouting.config.HTTPApplicationRoutingZoneName -o table',
               returnStdout: true
            ).trim()
            echo "${QUERY_VAR}"
-           sh "(az aks show --resource-group aks-cluster --name dizAKSCluster1 --query addonProfiles.httpApplicationRouting.config.HTTPApplicationRoutingZoneName -o table > file.txt)"
+           //sh "(az aks show --resource-group aks-cluster --name dizAKSCluster1 --query addonProfiles.httpApplicationRouting.config.HTTPApplicationRoutingZoneName -o table > file.txt)"
            //sh '(tail -n 1 file.txt > file1.txt && dns_var=\$(cat file1.txt) && sed -i "s/diz-app-deploy..*/diz-app-deploy.${dns_var}/g" ingress/ingress-app-deploy.yaml)'
+           sh "(az aks show --resource-group aks-cluster --name dizAKSCluster1 --query addonProfiles.httpApplicationRouting.config.HTTPApplicationRoutingZoneName -o table)"
            sh '(sed -i "s/diz-app-deploy..*/app.craciuno.com/g" ingress/ingress-app-deploy.yaml)'
         //   sh '(sed -i "s/diz-app-deploy..*/diz-app-deploy.${dns_var}/g" ingress/ingress-app-deploy.yaml)'
            sh "(kubectl apply -f ingress/ingress-app-deploy.yaml)"
