@@ -169,7 +169,7 @@ node('master'){
         //   sh '(sed -i "s/diz-app-deploy..*/diz-app-deploy.${dns_var}/g" ingress/ingress-app-deploy.yaml)'
            sh "(kubectl apply -f ingress/ingress-app-deploy.yaml)"
            sh "(kubectl get ingress > ip1.txt && tail -n 1 ip1.txt > ip2.txt && grep -oP '(([0-9][0-9][0-9])|([0-9][0-9])|([0-9])).(([0-9][0-9][0-9])|([0-9][0-9])|([0-9])).(([0-9][0-9][0-9])|([0-9][0-9])|([0-9])).(([0-9][0-9][0-9])|([0-9][0-9])|([0-9]))' ip2.txt > ip.txt)"
-           sh "(ip=$(cat ip.txt) && echo \$ip && az network dns record-set a add-record -g UTCN -z craciuno.com -n www -a \$ip)"
+           sh '(ip=$(cat ip.txt) && echo "\$ip" && az network dns record-set a add-record -g UTCN -z craciuno.com -n www -a "\$ip")'
         }
     }
 
