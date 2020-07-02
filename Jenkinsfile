@@ -33,8 +33,9 @@ node('master'){
            withCredentials([azureServicePrincipal('jenkins-ad')]){
 //           sh "cp build/libs/* /mnt/csb3b6d9a4ea33ex4761xb9d"
            sh "az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID"
-           sh "curl -X POST -d build/libs/* https://csb3b6d9a4ea33ex4761xb9d.file.core.windows.net/artifacts-storage"
+//           sh "curl -X POST -d build/libs/* https://csb3b6d9a4ea33ex4761xb9d.file.core.windows.net/artifacts-storage"
 //           sh "ls -la /mnt/csb3b6d9a4ea33ex4761xb9d/"
+           sh 'azcopy copy "build/libs/*" "https://csb3b6d9a4ea33ex4761xb9d.file.core.windows.net/artifacts-storage"'
          }
       }
 
