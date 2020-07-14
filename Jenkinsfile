@@ -144,7 +144,7 @@ node('master'){
            sh "(kubectl create -f deployment-mariadb/mariadb-deployment.yaml)"
            sh "(kubectl apply -f deployment-mariadb/mariadb-svc.yaml)"
            //App deploy & svc create
-           sh "(kubectl create deployment diz-app-deploy --image=aksdizregistry.azurecr.io/dizertatie/diz-app:v13 --replicas=2 --port=8080)"
+           sh "(kubectl create deployment diz-app-deploy --image=aksdizregistry.azurecr.io/dizertatie/diz-app:v13)"
            sh "(kubectl get deployments -o wide)"
            sh "(kubectl get deploy && kubectl get pods && kubectl get rs)"
            sh "(kubectl expose deploy diz-app-deploy --port=80 --target-port=8080 --dry-run -o yaml > diz-app-svc.yaml)"
